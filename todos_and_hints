@@ -1,0 +1,38 @@
+
+* Learn about github pull requests, which are very useful to
+communicate code changes.  If you work in a branche, you can issue a
+pull request if/when you would like me to review your changes.
+
+* Copy files from IC to FNAL.  You have to figure out where to put the
+files at FNAL.  "dCache" "EOS" "Resilient" "Blue Arc" are some words I
+have heard associated with disk space at FNAL in the past, but I'm no
+expert.  Copy command possibilities are:
+> lcg-cp
+> srmcp
+> xrdcp
+> dccp
+This page appears to be useful:
+http://uscms.org/uscms_at_work/computing/setup/mass_storage.shtml
+
+* To set up ROOT in python:
+import ROOT as r      # import the PyROOT library
+r.gROOT.SetBatch(1)   # Run in batch mode, so you don't waste time trying to open X11 connections
+r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h') # This generates the dictionary for vectors of 4-vectors (needed to read elP4,muP4,genP4,jetP4,etc.), and creates some annoying looking files in your folder that you don't need to keep in the repository.
+
+
+
+Initial TTree branches of interest:
+genP4
+genPdgId
+genMotherIndex
+genMotherPdgId
+
+For a given event, you cal loop over them with an index
+
+for i in range(nEvents) :
+   chain.GetEntry(i)
+   for j in range(len(chain.genPdgId)) :
+      print j, chain.genPdgId[j], chain.genP4[j].pt(), chain.genP4[j].eta(), chain.genMotherPdgId[j], chain.genMotherIndex[j]
+
+
+* The angle between two 4-vectors v1 and v2 is most easily accessed with the r.Math.VectorUtil.CosTheta(v1,v2) function.
