@@ -14,11 +14,19 @@ expert.  Copy command possibilities are:
 This page appears to be useful:
 http://uscms.org/uscms_at_work/computing/setup/mass_storage.shtml
 
+### Will look into this more, but I've read the man pages for lcg-cp. 
+###It says that I need a source file and then a destination file, but I'm not sure I understand how to set that up properly. 
+###Is the source file the one that begins with root://, as shown in the text file, or is it the one that begins /pnfs/hep.ph.ic.uk.... that is listed in the TOP Database at Cern (second link in the "Links" email)? 
+###Do I have to create a root file in my directory to send it to?
+
+
+
 * To set up ROOT in python:
 import ROOT as r      # import the PyROOT library
 r.gROOT.SetBatch(1)   # Run in batch mode, so you don't waste time trying to open X11 connections
 r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h') # This generates the dictionary for vectors of 4-vectors (needed to read elP4,muP4,genP4,jetP4,etc.), and creates some annoying looking files in your folder that you don't need to keep in the repository.
 
+### Got it.
 
 
 Initial TTree branches of interest:
@@ -27,7 +35,7 @@ genPdgId
 genMotherIndex
 genMotherPdgId
 
-For a given event, you cal loop over them with an index
+For a given event, you can loop over them with an index
 
 for i in range(nEvents) :
    chain.GetEntry(i)
