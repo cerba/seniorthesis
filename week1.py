@@ -8,7 +8,15 @@ r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::
 # open files, read their names, and string them tog in chain
 f = open('ttj_ph.txt')
 filenames = f.readlines()
-chain = r.TChain('topRef/tree')
+#chain = r.TChain('topRef/tree')
+#tfile = r.TFile.Open(filenames[0])
+tfile = r.TNetFile(filenames[0])
+tree = tfile.Get('topRef/tree')
+chain = r.TChain()
+chain.Add(tree)
+
+
+#chain.Add(filenames[0])
 
 for i in range(chain.GetEntries()) :
     chain.GetEntry(i)

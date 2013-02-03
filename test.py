@@ -1,9 +1,11 @@
 # Test Document for week1.py
 
 import sys
+import setuproot
 import ROOT as r
 r.gROOT.SetBatch(1)
 r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h')
+
 
 
 # Define a File Name for Histogram
@@ -33,10 +35,23 @@ gluplot = r.TH1D('Gluon Transverse Momentum','',100,0,100)
 
 
 # Fill Histogram
+glulist = []
 
+for j in range(tree.GetEntries()) :
+    tree.GetEntry(j)
+    for i in range(0,16) :
+        if tree.genPdgId[i] == 21 :
+            glulist.append(tree.genP4[i].pt())
+
+print glulist
+'''
 for iEvent in range(tree.GetEntries()) :
     tree.GetEntry(iEvent)
-    gluplot.Fill(tree.genP4.pt())
+    for i in range(tree.genP4.GetEntries()):
+        glulist.append(tree.genP4
+#    tree.GetCoordinates()
+#    gluplot.Fill(tree.genP4.pt())
+
 
 # Plot Histogram
 
@@ -44,8 +59,7 @@ for iEvent in range(tree.GetEntries()) :
 gluplot.Draw()
 canvas.Print('%s.pdf'%fileName)
 
+'''
 
 #End Program
 print 'End of Program'
-
-
