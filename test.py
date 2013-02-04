@@ -23,8 +23,10 @@ tree = f.Get('topRef/tree')
 
 
 # Make Canvas, Set Legend
-canvas = r.TCanvas()
-#canvas.Divide(2,2)
+c1 = r.TCanvas()
+c2 = r.TCanvas()
+c1.Divide(2,2)
+c2.Divide(2,2)
 
 leg = r.TLegend(0.7,0.7,1,1)
 leg.SetHeader = ("Plot Type")
@@ -32,42 +34,121 @@ leg.SetHeader = ("Plot Type")
 
 # Define Histogram
 gluplot = r.TH1D('Gluon Transverse Momentum','',100,0,100)
-
+proplot = r.TH1D('Proton Transverse Momentum','',50,0,50)
+tplot = r.TH1D('Top Transverse Momentum','',50,0,50)
+atplot = r.TH1D('AntiTop Transverse Momentum','',50,0,50)
+bplot = r.TH1D('Bottom Transverse Momentum','',50,0,50)
+abplot = r.TH1D('Anti-Bottom Transverse Momentum','',50,0,50)
+qwplot = r.TH1D('Q from W+ Transverse Momentum','',50,0,50)
+aqwplot = r.TH1D('Q from W- Transverse Momentum','',50,0,50)
 
 # Fill Histogram
 glulist = []
+prolist = []
+tlist = []
+atlist = []
+blist = []
+ablist = []
+qwlist = []
+aqwlist = []
 
-for j in range(0,5) : #range(tree.GetEntries()) :
+for j in range(tree.GetEntries()) :
     tree.GetEntry(j)
-    for i in range(0,16) :
-        if tree.genPdgId[i] == 21 :
-            glulist.append(tree.genP4[i].pt())
+    for i in range(0,15) :
+        if tree.genPdgId[i] == -6 :
+            if tree.genPdgId[i+1] == 21 :
+                glulist.append(tree.genP4[i+1].pt())
     gluplot.Fill(len(glulist))
 
-print glulist
+    for i in range(2,15) :
+        if tree.genPdgId[i] == 2212 :
+            prolist.append(tree.genP4[i].pt())
+    proplot.Fill(len(prolist))
 
-'''
-for i in glulist :
-    i = iter(glulist)
-    item = i.next()
-    gluplot.Fill(item)
+    for i in range(0,16) :
+        if tree.genPdgId[i] == 6 :
+            tlist.append(tree.genP4[i].pt())
+    tplot.Fill(len(tlist))
 
+    for i in range(0,16) :
+        if tree.genPdgId[i] == -6 :
+            atlist.append(tree.genP4[i].pt())
+    atplot.Fill(len(atlist))
+
+    for i in range(0,16) :
+        if tree.genPdgId[i] == 5 :
+            blist.append(tree.genP4[i].pt())
+    bplot.Fill(len(blist))
+
+    for i in range(0,16) :
+        if tree.genPdgId[i] == -5 :
+            ablist.append(tree.genP4[i].pt())
+    abplot.Fill(len(ablist))
+
+    for i in range(0,15) :
+        if tree.genPdgId[i] == 24 :
+            if tree.genPdgId[i+1] == 1 :
+                qwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == 2:
+                qwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == 3 :
+                qwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == 4:
+                qwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == 5 :
+                qwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == 6:
+                qwlist.append(tree.genP4[i+1].pt())
+    qwplot.Fill(len(qwlist))
+
+    for i in range(0,15) :
+        if tree.genPdgId[i] == -24 :
+            if tree.genPdgId[i+1] == -1 :
+               aqwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == -2:
+                aqwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == -3 :
+                aqwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == -4:
+                aqwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == -5 :
+                aqwlist.append(tree.genP4[i+1].pt())
+            if tree.genPdgId[i+1] == -6:
+                aqwlist.append(tree.genP4[i+1].pt())
+    aqwplot.Fill(len(aqwlist))
+            
+            
 #print glulist
 
- 
-for iEvent in range(tree.GetEntries()) :
-    tree.GetEntry(iEvent)
-    for i in range(tree.genP4.GetEntries()):
-        glulist.append(tree.genP4
-#    tree.GetCoordinates()
-#    gluplot.Fill(tree.genP4.pt())
-'''
 
 # Plot Histogram
 
-#canvas.cd(1)
+c1.cd(1)
 gluplot.Draw()
-canvas.Print('%s.pdf'%fileName)
+
+c1.cd(2)
+proplot.Draw()
+
+c1.cd(3)
+tplot.Draw()
+
+c1.cd(4)
+atplot.Draw()
+
+c2.cd(1)
+bplot.Draw()
+
+c2.cd(2)
+abplot.Draw()
+
+c2.cd(3)
+qwplot.Draw()
+
+c2.cd(4)
+aqwplot.Draw()
+
+c1.Print('%s.pdf'%fileName)
+c2.Print('%s2.pdf'%fileName)
 
 
 # End Program
