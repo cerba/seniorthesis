@@ -37,21 +37,31 @@ gluplot = r.TH1D('Gluon Transverse Momentum','',100,0,100)
 # Fill Histogram
 glulist = []
 
-for j in range(tree.GetEntries()) :
+for j in range(0,5) : #range(tree.GetEntries()) :
     tree.GetEntry(j)
     for i in range(0,16) :
         if tree.genPdgId[i] == 21 :
             glulist.append(tree.genP4[i].pt())
+    gluplot.Fill(len(glulist))
 
 print glulist
+
 '''
+for i in glulist :
+    i = iter(glulist)
+    item = i.next()
+    gluplot.Fill(item)
+
+#print glulist
+
+ 
 for iEvent in range(tree.GetEntries()) :
     tree.GetEntry(iEvent)
     for i in range(tree.genP4.GetEntries()):
         glulist.append(tree.genP4
 #    tree.GetCoordinates()
 #    gluplot.Fill(tree.genP4.pt())
-
+'''
 
 # Plot Histogram
 
@@ -59,7 +69,6 @@ for iEvent in range(tree.GetEntries()) :
 gluplot.Draw()
 canvas.Print('%s.pdf'%fileName)
 
-'''
 
-#End Program
+# End Program
 print 'End of Program'
