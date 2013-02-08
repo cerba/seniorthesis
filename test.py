@@ -59,11 +59,6 @@ for j in range(tree.GetEntries()) :
             if tree.genPdgId[i+1] == 21 :
                 glulist.append(tree.genP4[i+1].pt())
                 
-                
-for i in range(0,len(glulist) - 1):
-    gluplot.Fill(glulist[i])
-
-'''
     for i in range(2,15) :
         if tree.genPdgId[i] == 2212 :
             prolist.append(tree.genP4[i].pt())
@@ -120,9 +115,32 @@ for i in range(0,len(glulist) - 1):
             if tree.genPdgId[i+1] == -6:
                 aqwlist.append(tree.genP4[i+1].pt())
     aqwplot.Fill(len(aqwlist))
-'''     
-            
-print glulist
+
+for i in range(0,len(glulist) - 1):
+        gluplot.Fill(glulist[i])
+
+for i in range(0,len(prolist) - 1):
+        proplot.Fill(prolist[i])
+
+for i in range(0,len(tlist) - 1):
+        tplot.Fill(tlist[i])
+
+for i in range(0,len(atlist) - 1):
+        atplot.Fill(atlist[i])
+
+for i in range(0,len(blist) - 1):
+        bplot.Fill(blist[i])
+
+for i in range(0,len(ablist) - 1):
+        abplot.Fill(ablist[i])
+
+for i in range(0,len(qwlist) - 1):
+        qwplot.Fill(qwlist[i])
+
+for i in range(0,len(aqwlist) - 1):
+        aqwplot.Fill(aqwlist[i])
+
+#print glulist
 
 
 # Plot Histogram
@@ -130,7 +148,6 @@ print glulist
 c1.cd(1)
 gluplot.Draw()
 
-'''
 c1.cd(2)
 proplot.Draw()
 
@@ -151,9 +168,9 @@ qwplot.Draw()
 
 c2.cd(4)
 aqwplot.Draw()
-'''
+
 c1.Print('%s.pdf'%fileName)
-#c2.Print('%s2.pdf'%fileName)
+c2.Print('%s_2.pdf'%fileName)
 
 
 # End Program
