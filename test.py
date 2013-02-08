@@ -1,4 +1,4 @@
-# Test Document for week1.py
+# Test Document for week1.py: use one file to try filling histograms
 
 import sys
 import setuproot
@@ -34,13 +34,13 @@ leg.SetHeader = ("Plot Type")
 
 # Define Histogram
 gluplot = r.TH1D('Gluon Transverse Momentum','',100,0,100)
-proplot = r.TH1D('Proton Transverse Momentum','',50,0,50)
-tplot = r.TH1D('Top Transverse Momentum','',50,0,50)
-atplot = r.TH1D('AntiTop Transverse Momentum','',50,0,50)
-bplot = r.TH1D('Bottom Transverse Momentum','',50,0,50)
-abplot = r.TH1D('Anti-Bottom Transverse Momentum','',50,0,50)
-qwplot = r.TH1D('Q from W+ Transverse Momentum','',50,0,50)
-aqwplot = r.TH1D('Q from W- Transverse Momentum','',50,0,50)
+proplot = r.TH1D('Proton Transverse Momentum','',100,0,100)
+tplot = r.TH1D('Top Transverse Momentum','',100,0,100)
+atplot = r.TH1D('AntiTop Transverse Momentum','',100,0,100)
+bplot = r.TH1D('Bottom Transverse Momentum','',100,0,100)
+abplot = r.TH1D('Anti-Bottom Transverse Momentum','',100,0,100)
+qwplot = r.TH1D('Q from W+ Transverse Momentum','',100,0,100)
+aqwplot = r.TH1D('Q from W- Transverse Momentum','',100,0,100)
 
 # Fill Histogram
 glulist = []
@@ -58,8 +58,12 @@ for j in range(tree.GetEntries()) :
         if tree.genPdgId[i] == -6 :
             if tree.genPdgId[i+1] == 21 :
                 glulist.append(tree.genP4[i+1].pt())
-    gluplot.Fill(len(glulist))
+                
+                
+for i in range(0,len(glulist) - 1):
+    gluplot.Fill(glulist[i])
 
+'''
     for i in range(2,15) :
         if tree.genPdgId[i] == 2212 :
             prolist.append(tree.genP4[i].pt())
@@ -116,9 +120,9 @@ for j in range(tree.GetEntries()) :
             if tree.genPdgId[i+1] == -6:
                 aqwlist.append(tree.genP4[i+1].pt())
     aqwplot.Fill(len(aqwlist))
+'''     
             
-            
-#print glulist
+print glulist
 
 
 # Plot Histogram
@@ -126,6 +130,7 @@ for j in range(tree.GetEntries()) :
 c1.cd(1)
 gluplot.Draw()
 
+'''
 c1.cd(2)
 proplot.Draw()
 
@@ -146,9 +151,9 @@ qwplot.Draw()
 
 c2.cd(4)
 aqwplot.Draw()
-
+'''
 c1.Print('%s.pdf'%fileName)
-c2.Print('%s2.pdf'%fileName)
+#c2.Print('%s2.pdf'%fileName)
 
 
 # End Program
