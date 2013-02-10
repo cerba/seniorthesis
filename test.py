@@ -62,27 +62,19 @@ for j in range(tree.GetEntries()) :
     for i in range(2,15) :
         if tree.genPdgId[i] == 2212 :
             prolist.append(tree.genP4[i].pt())
-    proplot.Fill(len(prolist))
 
     for i in range(0,16) :
         if tree.genPdgId[i] == 6 :
             tlist.append(tree.genP4[i].pt())
-    tplot.Fill(len(tlist))
 
-    for i in range(0,16) :
         if tree.genPdgId[i] == -6 :
             atlist.append(tree.genP4[i].pt())
-    atplot.Fill(len(atlist))
 
-    for i in range(0,16) :
         if tree.genPdgId[i] == 5 :
             blist.append(tree.genP4[i].pt())
-    bplot.Fill(len(blist))
 
-    for i in range(0,16) :
         if tree.genPdgId[i] == -5 :
             ablist.append(tree.genP4[i].pt())
-    abplot.Fill(len(ablist))
 
     for i in range(0,15) :
         if tree.genPdgId[i] == 24 :
@@ -98,9 +90,7 @@ for j in range(tree.GetEntries()) :
                 qwlist.append(tree.genP4[i+1].pt())
             if tree.genPdgId[i+1] == 6:
                 qwlist.append(tree.genP4[i+1].pt())
-    qwplot.Fill(len(qwlist))
 
-    for i in range(0,15) :
         if tree.genPdgId[i] == -24 :
             if tree.genPdgId[i+1] == -1 :
                aqwlist.append(tree.genP4[i+1].pt())
@@ -114,7 +104,6 @@ for j in range(tree.GetEntries()) :
                 aqwlist.append(tree.genP4[i+1].pt())
             if tree.genPdgId[i+1] == -6:
                 aqwlist.append(tree.genP4[i+1].pt())
-    aqwplot.Fill(len(aqwlist))
 
 for i in range(0,len(glulist) - 1):
         gluplot.Fill(glulist[i])
