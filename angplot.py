@@ -38,20 +38,26 @@ abplot = r.TH1D('Anti-Bottom Transverse Momentum','',100,0,100)
 glulist = []
 blist = []
 ablist = []
+anglglulist = []
+anglblist = []
+anglablist = []
 
 for j in range(0,5) :    #range(tree.GetEntries()) :
     tree.GetEntry(j)
     for i in range(len(tree.genPdgId)) :
         if tree.genPdgId[i] == 21 and tree.genMotherIndex[i] == 4 :
-            glulist.append(tree.genP4[i+1].pt())
+            glulist.append(tree.genP4[i].pt())
+            anglglulist.append(tree.genP4[i])
         else :  None
 
-        if tree.genPdgId[i] == 5 :
+        if tree.genPdgId[i] == 5 and tree.genMotherIndex[i] == 6 :
             blist.append(tree.genP4[i].pt())
+            anglblist.append(tree.genP4[i])
         else :  None
 
-        if tree.genPdgId[i] == -5 :
+        if tree.genPdgId[i] == -5 and tree.genMotherIndex[i] == 7 :
             ablist.append(tree.genP4[i].pt())
+            anglablist.append(tree.genP4[i])
         else :  None
 
 
@@ -67,8 +73,14 @@ for i in range(0,len(ablist) - 1):
 #print glulist
 
 # Open Angle Plots
+# Assuming that anglglulist and corresponding particle list are the same size
 
-openangl = r.Math.VectorUtil.CosTheta(tree.genP4,tree.genP4)
+openangl = []
+
+#for i in range(0,len(anglglulist)) :
+   # openangl.append(r.Math.VectorUtil.CosTheta(anglglulist[i],anglblist[i]))
+
+openangl.append(r.Math.VectorUtil.CosTheta(tree.genP4[4],tree.genP4[5]))
 
 anglplot = r.TH1D('Open Angle Gluon vs. B','',100,0,100)
 
