@@ -1,3 +1,5 @@
 *~
 AutoDict*
 *.pyc
+cpp/linkdef_cxx.d
+cpp/linkdef_cxx.so
