@@ -13,7 +13,6 @@ if len(sys.argv)<2 :
     
 fileName = sys.argv[1]
 
-
 # Open File
 f = r.TFile.Open("root://xrootd.grid.hep.ph.ic.ac.uk///store/user/bbetchar/TOP/automated/2013_01_15_05_13_16/TT_CT10_TuneZ2star_8TeV-powheg-tauola.Summer12_DR53X-PU_S10_START53_V7A-v1.AODSIM/topTuple_21_1_q59.root")
 
@@ -82,7 +81,8 @@ openangl.append(r.Math.VectorUtil.CosTheta(tree.genP4[4],tree.genP4[5]))
 
 anglplot = r.TH1D('Open Angle Gluon vs. B','',100,0,100)
 
-#anglplot.Fill(openangl)
+#anglplot.Fill(openangl) # You can't pass a list to Fill.  You have to pass each individual item in the list to fill
+for ang in openangl : anglplot.Fill(ang) # This works, but it is not efficient to have the intermediate list, since you end up looping twice.
 
 c1.cd(4)
 anglplot.Draw()
