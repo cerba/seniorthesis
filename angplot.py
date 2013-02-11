@@ -3,10 +3,9 @@
 import sys
 import setuproot
 import ROOT as r
+
 r.gROOT.SetBatch(1)
 r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h')
-
-
 
 # Define a File Name for Histogram
 if len(sys.argv)<2 :
@@ -42,7 +41,7 @@ anglglulist = []
 anglblist = []
 anglablist = []
 
-for j in range(0,5) :    #range(tree.GetEntries()) :
+for j in range(tree.GetEntries()) :
     tree.GetEntry(j)
     for i in range(len(tree.genPdgId)) :
         if tree.genPdgId[i] == 21 and tree.genMotherIndex[i] == 4 :
@@ -77,14 +76,17 @@ for i in range(0,len(ablist) - 1):
 
 openangl = []
 
-#for i in range(0,len(anglglulist)) :
-   # openangl.append(r.Math.VectorUtil.CosTheta(anglglulist[i],anglblist[i]))
+for i in range(0,len(anglglulist) - 1) :
+    openangl.append(r.Math.VectorUtil.CosTheta(anglglulist[i],anglblist[i]))
+    #openangl.append(r.Math.VectorUtil.CosTheta(tree.genP4[i],tree.genP4[i+2]))
 
-openangl.append(r.Math.VectorUtil.CosTheta(tree.genP4[4],tree.genP4[5]))
+#openangl = r.TLorentzVector.CosTheta(tree.genP4[1].pt(),tree.genP4[2].pt())
 
-anglplot = r.TH1D('Open Angle Gluon vs. B','',100,0,100)
+anglplot = r.TH1D('Open Angle Gluon vs. B','',2,0,2)
 
-anglplot.Fill(openangl)
+for i in range(0,len(openangl) - 1):
+    anglplot.Fill(openangl[i])
+
 
 c1.cd(4)
 anglplot.Draw()
