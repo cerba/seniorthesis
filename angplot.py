@@ -3,8 +3,6 @@
 import sys
 import setuproot
 import ROOT as r
-r.gROOT.SetBatch(1)
-r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h')
 
 
 
@@ -84,7 +82,7 @@ openangl.append(r.Math.VectorUtil.CosTheta(tree.genP4[4],tree.genP4[5]))
 
 anglplot = r.TH1D('Open Angle Gluon vs. B','',100,0,100)
 
-anglplot.Fill(openangl)
+#anglplot.Fill(openangl)
 
 c1.cd(4)
 anglplot.Draw()
