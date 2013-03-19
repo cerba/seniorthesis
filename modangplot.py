@@ -6,7 +6,8 @@ import ROOT as r
 r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h')
 
 # Open File
-f = r.TFile.Open("root://xrootd.grid.hep.ph.ic.ac.uk///store/user/bbetchar/TOP/automated/2013_01_15_05_13_16/TT_CT10_TuneZ2star_8TeV-powheg-tauola.Summer12_DR53X-PU_S10_START53_V7A-v1.AODSIM/topTuple_21_1_q59.root")
+#f = r.TFile.Open("root://xrootd.grid.hep.ph.ic.ac.uk///store/user/bbetchar/TOP/automated/2013_01_15_05_13_16/TT_CT10_TuneZ2star_8TeV-powheg-tauola.Summer12_DR53X-PU_S10_START53_V7A-v1.AODSIM/topTuple_21_1_q59.root")
+f = r.TFile.Open("/pnfs/cms/WAX/11/store/user/cerba17/test.root")
 
 tree = f.Get('topRef/tree')
 
@@ -20,9 +21,6 @@ qwplot = r.TH1D('Q from W+ Transverse Momentum','',100,0,450)
 aqwplot = r.TH1D('Q from W- Transverse Momentum','',100,0,450)
 igluplot = r.TH1D('Gluon First P Transverse Momentum','g,p_T',100,0,450)
 ingluplot = r.TH1D('Gluon Second P Transverse Momentum','g,p_T',100,0,450)
-
-qwlist = []
-aqwlist = []
 
 glubAngl = r.TH1D('Open Angle Gluon vs. B','',100,-1,1)
 gluBbarAngl = r.TH1D('Open Angle Gluon vs. Bbar','',100,-1,1)
@@ -50,7 +48,7 @@ for j in range(tree.GetEntries()) :
     iglu = next((i for i in index if tree.genPdgId[i] == 21 and tree.genMotherIndex[i] == 0),None)
     inglu = next((i for i in index if tree.genPdgId[i] == 21 and tree.genMotherIndex[i] == 1),None)
     
-    if glu!=None and iglu!=None and inglu!=None :
+    if glu!=None :
         gluplot.Fill(tree.genP4[glu].pt())
         glubAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[b]))
         gluBbarAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[ab]))
@@ -60,7 +58,9 @@ for j in range(tree.GetEntries()) :
         gluQwAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[cqw]))
         gluAqwAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[xqw]))
         gluAqwAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[yqw]))
+    if glu!=None and iglu!=None :
         gluipAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[iglu]))
+    if glu!=None and inglu!=None :
         gluinpAngl.Fill(r.Math.VectorUtil.CosTheta(tree.genP4[glu],tree.genP4[inglu]))
 
     if bqw!=0 :
