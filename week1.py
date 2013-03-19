@@ -2,33 +2,27 @@
 
 import ROOT as r
 r.gROOT.SetBatch(1)
+r.gInterpreter.GenerateDictionary('vector<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<Double32_t> > >','vector;Math/LorentzVector.h')
+
 
 # open files, read their names, and string them tog in chain
 f = open('ttj_ph.txt')
 filenames = f.readlines()
-chain = r.TChain('topRef/tree')
+#chain = r.TChain('topRef/tree')
+#tfile = r.TFile.Open(filenames[0])
+tfile = r.TNetFile(filenames[0])
+tree = tfile.Get('topRef/tree')
+chain = r.TChain()
+chain.Add(tree)
 
-for f in filenames:
-    file  = r.TFile.Open(f)
-    chain.Add('file')
 
-print chain.GetEntry(0)
+#chain.Add(filenames[0])
 
-'''
-chain = r.TChain('topRef/tree')
-
-for f in filenames:
-    g = r.TFile.Open(f)
-    
-    chain.Add(g)
-    
-    break
-#print chain.GetEntries() #slow
-
-chain.GetEntry(0)
-for id in chain.genPdgId:
-    print id
-'''
+for i in range(chain.GetEntries()) :
+    chain.GetEntry(i)
+    for j in range(len(chain.genPdgId)) :
+        print j, chain.genPdgId[j], chain.genP4[j].pt(), chain.genP4[j].eta(), chain.genMotherPdgId[j], chain.genMotherIndex[j]
+        
 
 '''
 # Make Histograms
